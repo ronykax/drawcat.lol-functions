@@ -1,14 +1,9 @@
 // this function gets all the users from `auth.users` and creates a profile for each user in `profiles`.
 // because supabase doesn't let me access `auth.users` directly idk why
 
-import { createClient } from "@supabase/supabase-js";
+import { supabase } from "..";
 
-const supabase = createClient(
-    process.env.SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
-
-async function syncProfiles() {
+async function run() {
     // get users ahh
     const { data: users, error: userErr } =
         await supabase.auth.admin.listUsers();
@@ -48,4 +43,4 @@ async function syncProfiles() {
     console.log("profiles synced yay");
 }
 
-syncProfiles().catch(console.error);
+run().catch(console.error);
